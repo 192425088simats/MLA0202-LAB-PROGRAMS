@@ -1,0 +1,19 @@
+import pandas as pd
+data = pd.read_csv("finds.csv")
+print("Training Data:\n")
+print(data)
+x = data.iloc[:, :-1].values
+y = data.iloc[:, -1].values
+h = ['0'] * len(x[0])
+print("\nSteps of FIND-S:\n")
+for i in range(len(x)):
+    if y[i] == "Yes":
+        if h[0] == '0':
+            h = list(x[i])
+        else:
+            for j in range(len(h)):
+                if h[j] != x[i][j]:
+                    h[j] = '?'
+        print("Step", i + 1, ":", h)
+print("\nFinal Hypothesis:")
+print(h)
