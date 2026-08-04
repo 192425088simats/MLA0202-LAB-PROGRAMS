@@ -1,0 +1,39 @@
+import pandas as pd
+data = pd.read_csv("C:/Users/keert/OneDrive/Desktop/FOML/candidate.csv")
+print("Training Data:\n")
+print(data)
+x = data.iloc[:, :-1].values
+y = data.iloc[:, -1].values
+S = list(x[0])
+G = [['?' for i in range(len(S))]]
+
+print("\nInitial Specific Hypothesis:")
+print(S)
+
+print("\nInitial General Hypothesis:")
+print(G)
+
+for i in range(len(x)):
+    if y[i] == "Yes":
+        for j in range(len(S)):
+            if S[j] != x[i][j]:
+                S[j] = '?'
+G = [g for g in G if all(g[k] == '?' or g[k] == S[k] for k in range(len(S)))]
+    else:
+        temp = []
+        for j in range(len(S)):
+            if S[j] != '?' and S[j] != x[i][j]:
+                g = ['?' for k in range(len(S))]
+                g[j] = S[j]
+                temp.append(g)
+        G = temp
+    print("\nAfter Example", i + 1)
+    print("S =", S)
+    print("G =", G)
+
+print("\nFinal Specific Hypothesis:")
+print(S)
+
+print("\nFinal General Hypothesis:")
+for g in G:
+    print(g)
