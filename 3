@@ -1,0 +1,28 @@
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn.tree import DecisionTreeClassifier
+data = pd.read_csv("C:/Users/keert/OneDrive/Desktop/FOML/playtennis.csv")
+
+print("Dataset:\n")
+print(data)
+
+le = LabelEncoder()
+
+for col in data.columns:
+    data[col] = le.fit_transform(data[col])
+
+x = data.iloc[:, :-1]
+y = data.iloc[:, -1]
+
+model = DecisionTreeClassifier(criterion="entropy")
+
+model.fit(x, y)
+
+sample = [[2, 2, 1, 1]]
+
+result = model.predict(sample)
+
+if result[0] == 1:
+    print("\nPrediction : Play = Yes")
+else:
+    print("\nPrediction : Play = No")
